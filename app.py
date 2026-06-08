@@ -12,14 +12,12 @@ st.set_page_config(
     page_icon="🚚"
 )
 
-# ── FORCE LIGHT MODE + SHOPEE THEME CSS ──────────────────────────────────────
+# ── SHOPEE THEME CSS ──────────────────────────────────────────────────────────
 st.markdown("""
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=DM+Sans:wght@400;500;600&display=swap');
 
-/* Force light mode — override Streamlit dark/auto theme */
-:root, [data-theme="dark"], [data-theme="light"] {
-    color-scheme: light !important;
+:root {
     --shopee-orange:     #EE4D2D;
     --shopee-orange-2:   #F85606;
     --shopee-orange-lt:  #FFF3F0;
@@ -36,139 +34,76 @@ st.markdown("""
     --radius-sm:         8px;
 }
 
-/* Hard override semua elemen ke light */
-.stApp, .stApp * {
-    color-scheme: light !important;
-}
-.stApp {
-    background: #F5F5F5 !important;
-    color: #333333 !important;
-}
+html, body, [class*="css"] { font-family: 'DM Sans', sans-serif !important; color: var(--shopee-text); }
+.stApp { background: var(--shopee-gray); }
 
-/* Main content area */
-.main .block-container {
-    background: #F5F5F5 !important;
-    color: #333333 !important;
-}
+h1 { font-family:'Nunito',sans-serif !important; font-weight:900 !important; font-size:1.8rem !important; color:var(--shopee-orange) !important; letter-spacing:-0.5px; margin-bottom:0 !important; }
+h2 { font-family:'Nunito',sans-serif !important; font-weight:800 !important; font-size:1.15rem !important; color:var(--shopee-dark) !important; margin-top:0.5rem !important; }
+h3 { font-family:'Nunito',sans-serif !important; font-weight:700 !important; color:var(--shopee-dark) !important; }
 
-/* Semua teks */
-html, body, [class*="css"], p, span, div, label {
-    font-family: 'DM Sans', sans-serif !important;
-    color: #333333 !important;
-}
+.stApp [data-testid="stCaptionContainer"] p { color:var(--shopee-subtext) !important; font-size:0.82rem !important; }
 
-/* Heading */
-h1 { font-family:'Nunito',sans-serif !important; font-weight:900 !important; font-size:1.8rem !important; color:#EE4D2D !important; letter-spacing:-0.5px; margin-bottom:0 !important; }
-h2 { font-family:'Nunito',sans-serif !important; font-weight:800 !important; font-size:1.15rem !important; color:#2C2C2C !important; margin-top:0.5rem !important; }
-h3 { font-family:'Nunito',sans-serif !important; font-weight:700 !important; color:#2C2C2C !important; }
-h4, h5, h6 { font-family:'Nunito',sans-serif !important; color:#2C2C2C !important; }
-
-/* Caption */
-.stApp [data-testid="stCaptionContainer"] p { color:#757575 !important; font-size:0.82rem !important; }
-
-/* Sidebar — paksa putih */
-section[data-testid="stSidebar"] {
-    background: #FFFFFF !important;
-    border-right: 2px solid #FFDDD6 !important;
-}
-section[data-testid="stSidebar"] *,
+section[data-testid="stSidebar"] { background:var(--white) !important; border-right:2px solid var(--shopee-orange-mid); }
 section[data-testid="stSidebar"] h2,
 section[data-testid="stSidebar"] h3,
-section[data-testid="stSidebar"] p,
+section[data-testid="stSidebar"] .stMarkdown p,
 section[data-testid="stSidebar"] label,
-section[data-testid="stSidebar"] span { color:#2C2C2C !important; background: transparent !important; }
+section[data-testid="stSidebar"] span { color:var(--shopee-dark) !important; }
 
-/* Input fields */
-.stNumberInput input, .stTextInput input, .stSelectbox select,
-input[type="number"], input[type="text"] {
-    border: 1.5px solid #EDEDED !important;
-    border-radius: 8px !important;
-    background: #FFFFFF !important;
-    color: #333333 !important;
-    font-family: 'DM Sans', sans-serif !important;
-    transition: border-color 0.2s;
+.stNumberInput input, .stTextInput input {
+    border:1.5px solid var(--shopee-gray-2) !important;
+    border-radius:var(--radius-sm) !important;
+    background:var(--white) !important;
+    font-family:'DM Sans',sans-serif !important;
+    transition:border-color 0.2s;
 }
 .stNumberInput input:focus, .stTextInput input:focus {
-    border-color: #EE4D2D !important;
-    box-shadow: 0 0 0 3px rgba(238,77,45,0.12) !important;
+    border-color:var(--shopee-orange) !important;
+    box-shadow:0 0 0 3px rgba(238,77,45,0.12) !important;
 }
 
-/* Checkbox */
-.stCheckbox label { color: #333333 !important; }
-.stCheckbox [data-testid="stCheckbox"] { accent-color: #EE4D2D; }
-
-/* Multiselect */
-[data-testid="stMultiSelect"] > div {
-    background: #FFFFFF !important;
-    border: 1.5px solid #EDEDED !important;
-    border-radius: 8px !important;
-}
-[data-testid="stMultiSelect"] span { color: #333333 !important; }
-
-/* Metric cards */
 [data-testid="metric-container"] {
-    background: #FFFFFF !important;
-    border: 1.5px solid #FFDDD6 !important;
-    border-radius: 12px !important;
-    padding: 16px 20px !important;
-    box-shadow: 0 2px 8px rgba(238,77,45,0.10) !important;
-    transition: box-shadow 0.2s, transform 0.2s;
+    background:var(--white) !important;
+    border:1.5px solid var(--shopee-orange-mid) !important;
+    border-radius:var(--radius) !important;
+    padding:16px 20px !important;
+    box-shadow:var(--shadow-sm) !important;
+    transition:box-shadow 0.2s, transform 0.2s;
 }
-[data-testid="metric-container"]:hover { box-shadow: 0 4px 20px rgba(238,77,45,0.15) !important; transform: translateY(-2px); }
-[data-testid="stMetricLabel"] { font-size:0.75rem !important; font-weight:600 !important; color:#757575 !important; text-transform:uppercase; letter-spacing:0.5px; }
-[data-testid="stMetricValue"] { font-family:'Nunito',sans-serif !important; font-weight:900 !important; font-size:1.4rem !important; color:#EE4D2D !important; }
+[data-testid="metric-container"]:hover { box-shadow:var(--shadow-md) !important; transform:translateY(-2px); }
+[data-testid="stMetricLabel"] { font-size:0.75rem !important; font-weight:600 !important; color:var(--shopee-subtext) !important; text-transform:uppercase; letter-spacing:0.5px; }
+[data-testid="stMetricValue"] { font-family:'Nunito',sans-serif !important; font-weight:900 !important; font-size:1.4rem !important; color:var(--shopee-orange) !important; }
 
-/* Buttons */
 .stButton > button {
-    background: linear-gradient(135deg,#EE4D2D,#F85606) !important;
-    color: white !important; border: none !important;
-    border-radius: 8px !important;
-    font-family: 'Nunito',sans-serif !important; font-weight:700 !important;
-    padding: 8px 22px !important; transition: opacity 0.2s, transform 0.15s;
+    background:linear-gradient(135deg,var(--shopee-orange),var(--shopee-orange-2)) !important;
+    color:white !important; border:none !important;
+    border-radius:var(--radius-sm) !important;
+    font-family:'Nunito',sans-serif !important; font-weight:700 !important;
+    padding:8px 22px !important; transition:opacity 0.2s, transform 0.15s;
 }
 .stButton > button:hover { opacity:0.9 !important; transform:translateY(-1px) !important; }
 
-/* Alerts */
-.stSuccess { background:#F0FFF4 !important; border-left:4px solid #22c55e !important; border-radius:8px !important; }
-.stError   { background:#FFF5F5 !important; border-left:4px solid #EE4D2D !important; border-radius:8px !important; }
-.stWarning { background:#FFFBEB !important; border-left:4px solid #f59e0b !important; border-radius:8px !important; }
-.stInfo    { background:#FFF3F0 !important; border-left:4px solid #EE4D2D !important; border-radius:8px !important; }
+.stSuccess { background:#F0FFF4 !important; border-left:4px solid #22c55e !important; border-radius:var(--radius-sm) !important; }
+.stError   { background:#FFF5F5 !important; border-left:4px solid var(--shopee-orange) !important; border-radius:var(--radius-sm) !important; }
+.stWarning { background:#FFFBEB !important; border-left:4px solid #f59e0b !important; border-radius:var(--radius-sm) !important; }
+.stInfo    { background:var(--shopee-orange-lt) !important; border-left:4px solid var(--shopee-orange) !important; border-radius:var(--radius-sm) !important; }
 
-/* Dataframe */
-[data-testid="stDataFrame"] {
-    border-radius:12px !important; overflow:hidden;
-    border:1px solid #FFDDD6 !important;
-    box-shadow: 0 2px 8px rgba(238,77,45,0.10);
-}
-[data-testid="stDataFrame"] * { color: #333333 !important; background: #FFFFFF !important; }
+[data-testid="stDataFrame"] { border-radius:var(--radius) !important; overflow:hidden; border:1px solid var(--shopee-orange-mid) !important; box-shadow:var(--shadow-sm); }
 
-/* Tabs */
-.stTabs [data-baseweb="tab-list"] { background:#FFFFFF; border-radius:12px; padding:4px; gap:4px; border:1px solid #FFDDD6; }
-.stTabs [data-baseweb="tab"] { border-radius:8px !important; font-family:'Nunito',sans-serif !important; font-weight:700 !important; color:#757575 !important; padding:8px 18px !important; background: transparent !important; }
-.stTabs [aria-selected="true"] { background:linear-gradient(135deg,#EE4D2D,#F85606) !important; color:white !important; }
-.stTabs [aria-selected="true"] * { color:white !important; }
+.streamlit-expanderHeader { background:var(--shopee-orange-lt) !important; border-radius:var(--radius-sm) !important; font-weight:700 !important; color:var(--shopee-orange) !important; border:1px solid var(--shopee-orange-mid) !important; }
 
-/* Expander */
-.streamlit-expanderHeader { background:#FFF3F0 !important; border-radius:8px !important; font-weight:700 !important; color:#EE4D2D !important; border:1px solid #FFDDD6 !important; }
+hr { border-color:var(--shopee-orange-mid) !important; margin:12px 0 !important; }
 
-/* Divider */
-hr { border-color:#FFDDD6 !important; margin:12px 0 !important; }
+.stTabs [data-baseweb="tab-list"] { background:var(--white); border-radius:var(--radius); padding:4px; gap:4px; border:1px solid var(--shopee-orange-mid); }
+.stTabs [data-baseweb="tab"] { border-radius:var(--radius-sm) !important; font-family:'Nunito',sans-serif !important; font-weight:700 !important; color:var(--shopee-subtext) !important; padding:8px 18px !important; }
+.stTabs [aria-selected="true"] { background:linear-gradient(135deg,var(--shopee-orange),var(--shopee-orange-2)) !important; color:white !important; }
 
-/* Sidebar section label */
 .sidebar-section { font-family:'Nunito',sans-serif; font-weight:800; font-size:0.72rem; text-transform:uppercase; letter-spacing:1.2px; color:#EE4D2D !important; padding:6px 0 4px 0; border-bottom:2px solid #FFDDD6; margin-bottom:6px; }
 
-/* Scrollbar */
 ::-webkit-scrollbar { width:6px; height:6px; }
-::-webkit-scrollbar-track { background:#F5F5F5; }
-::-webkit-scrollbar-thumb { background:#FFDDD6; border-radius:3px; }
-::-webkit-scrollbar-thumb:hover { background:#EE4D2D; }
-
-/* LaTeX */
-.katex { color: #333333 !important; }
-
-/* Markdown teks biasa di dalam app */
-[data-testid="stMarkdownContainer"] p,
-[data-testid="stMarkdownContainer"] li { color: #333333 !important; }
+::-webkit-scrollbar-track { background:var(--shopee-gray); }
+::-webkit-scrollbar-thumb { background:var(--shopee-orange-mid); border-radius:3px; }
+::-webkit-scrollbar-thumb:hover { background:var(--shopee-orange); }
 </style>
 """, unsafe_allow_html=True)
 
@@ -193,32 +128,6 @@ st.markdown("""
 </div>
 """, unsafe_allow_html=True)
 
-# ── DATA KECAMATAN JOMBANG ────────────────────────────────────────────────────
-kecamatan_jombang = {
-    "Jombang Kota":      [-7.5568, 112.2332],
-    "Peterongan":        [-7.5461, 112.2714],
-    "Mojoagung":         [-7.5684, 112.3364],
-    "Ploso":             [-7.4566, 112.2152],
-    "Ngoro":             [-7.6841, 112.2592],
-    "Diwek":             [-7.5936, 112.2185],
-    "Sumobito":          [-7.5200, 112.3100],
-    "Kesamben":          [-7.6200, 112.3600],
-    "Bandarkedungmulyo": [-7.5100, 112.1700],
-    "Wonosalam":         [-7.6500, 112.3900],
-    "Perak":             [-7.4800, 112.2600],
-    "Gudo":              [-7.5750, 112.2900],
-    "Megaluh":           [-7.5050, 112.2400],
-    "Tembelang":         [-7.5300, 112.2000],
-    "Kabuh":             [-7.4200, 112.2800],
-    "Plandaan":          [-7.4100, 112.3200],
-    "Kudu":              [-7.4400, 112.3700],
-    "Bareng":            [-7.6300, 112.3200],
-    "Mojowarno":         [-7.6100, 112.3000],
-    "Jogoroto":          [-7.5700, 112.2500],
-    "Ngusikan":          [-7.4700, 112.3400],
-}
-lat_base, lon_base = -7.5466, 112.2384
-
 # ── SIDEBAR ───────────────────────────────────────────────────────────────────
 with st.sidebar:
     st.markdown("""
@@ -229,64 +138,20 @@ with st.sidebar:
     </div>
     """, unsafe_allow_html=True)
 
-    # — Pilih Kecamatan Demand —
-    st.markdown('<div class="sidebar-section">📍 Pilih Kecamatan Titik Demand</div>', unsafe_allow_html=True)
-    semua_kecamatan = list(kecamatan_jombang.keys())
-
-    col_btn1, col_btn2 = st.columns(2)
-    with col_btn1:
-        if st.button("✅ Pilih Semua", use_container_width=True):
-            st.session_state["kec_terpilih"] = semua_kecamatan
-    with col_btn2:
-        if st.button("❌ Reset", use_container_width=True):
-            st.session_state["kec_terpilih"] = semua_kecamatan[:5]
-
-    if "kec_terpilih" not in st.session_state:
-        st.session_state["kec_terpilih"] = semua_kecamatan[:5]
-
-    kec_terpilih = st.multiselect(
-        "Kecamatan aktif sebagai titik demand:",
-        options=semua_kecamatan,
-        default=st.session_state["kec_terpilih"],
-        help="Demand akan di-generate secara acak di sekitar kecamatan yang dipilih"
-    )
-    st.session_state["kec_terpilih"] = kec_terpilih
-
-    if not kec_terpilih:
-        st.error("⚠️ Pilih minimal 1 kecamatan!")
-        st.stop()
-
-    demand_per_kec = st.number_input(
-        "Jumlah Titik Demand per Kecamatan",
-        min_value=1, value=4, step=1,
-        help="Setiap kecamatan terpilih akan punya sejumlah titik demand ini"
-    )
-    num_demand = len(kec_terpilih) * demand_per_kec
-
-    st.markdown(
-        f'<div style="background:#FFF3F0;border:1px solid #FFDDD6;border-radius:6px;'
-        f'padding:6px 12px;font-size:0.8rem;color:#993C1D;margin-top:4px;">'
-        f'📊 Total titik demand: <b>{num_demand}</b> '
-        f'({len(kec_terpilih)} kecamatan × {demand_per_kec})</div>',
-        unsafe_allow_html=True
-    )
-
-    st.divider()
-
-    # — Kandidat Gudang —
-    st.markdown('<div class="sidebar-section">🏭 Kandidat Gudang</div>', unsafe_allow_html=True)
+    st.markdown('<div class="sidebar-section">📍 Titik Demand & Kandidat</div>', unsafe_allow_html=True)
     col_s1, col_s2 = st.columns(2)
     with col_s1:
+        num_demand = st.number_input("Titik Demand", min_value=1, value=40, step=5,
+                                     help="Jumlah agen/user sebagai titik demand")
+    with col_s2:
         num_candidates = st.number_input("Kandidat Gudang", min_value=1, value=5, step=1,
                                          help="Jumlah kandidat lokasi gudang")
-    with col_s2:
-        gudang_harus_buka = st.number_input(
-            "Harus Dibuka", min_value=1, max_value=num_candidates, value=2, step=1
-        )
+    gudang_harus_buka = st.number_input(
+        "Gudang Harus Dibuka", min_value=1, max_value=num_candidates, value=2, step=1
+    )
 
     st.divider()
 
-    # — Armada Truk —
     st.markdown('<div class="sidebar-section">🚛 Armada Truk</div>', unsafe_allow_html=True)
     col_t1, col_t2 = st.columns(2)
     with col_t1:
@@ -298,27 +163,31 @@ with st.sidebar:
     col_t3, col_t4 = st.columns(2)
     with col_t3:
         biaya_truk_per_km = st.number_input("Biaya/km (Rp rb)", min_value=0.0, value=5.0,
-                                             step=0.5, format="%.1f")
+                                             step=0.5, format="%.1f",
+                                             help="Biaya operasional per kilometer")
     with col_t4:
         fixed_cost_truk = st.number_input("Fixed/Rit (Rp rb)", min_value=0.0, value=150.0,
-                                           step=10.0, format="%.1f")
+                                           step=10.0, format="%.1f",
+                                           help="Biaya tetap per rit truk")
 
     st.divider()
 
-    # — Biaya & Kapasitas Gudang —
     st.markdown('<div class="sidebar-section">🏢 Biaya & Kapasitas Gudang</div>', unsafe_allow_html=True)
     col_g1, col_g2 = st.columns(2)
     with col_g1:
         biaya_operasional = st.number_input("Opex/Gudang (Rp jt)", min_value=0.0,
-                                             value=50.0, step=5.0, format="%.1f")
+                                             value=50.0, step=5.0, format="%.1f",
+                                             help="Biaya operasional bulanan per gudang")
     with col_g2:
         km_per_deg = st.number_input("1° = ? km", min_value=50.0, value=111.0,
-                                      step=1.0, format="%.1f")
+                                      step=1.0, format="%.1f",
+                                      help="Konversi derajat koordinat ke kilometer")
 
     kapasitas_gudang = st.number_input(
         "Kapasitas Gudang (Unit Barang)",
         min_value=100, value=2000, step=100,
-        help="Maksimal total unit barang yang bisa ditampung satu gudang."
+        help="Maksimal total unit barang yang bisa ditampung satu gudang. "
+             "Jika total demand yang dialokasikan ke satu gudang melebihi ini, solusi dinyatakan TIDAK LAYAK."
     )
 
     st.divider()
@@ -331,31 +200,40 @@ with st.sidebar:
     )
 
 # ── DATA GENERATOR ────────────────────────────────────────────────────────────
+kecamatan_jombang = {
+    "Jombang Kota":      [-7.5568, 112.2332],
+    "Peterongan":        [-7.5461, 112.2714],
+    "Mojoagung":         [-7.5684, 112.3364],
+    "Ploso":             [-7.4566, 112.2152],
+    "Ngoro":             [-7.6841, 112.2592],
+    "Diwek":             [-7.5936, 112.2185],
+    "Sumobito":          [-7.5200, 112.3100],
+    "Kesamben":          [-7.6200, 112.3600],
+    "Bandarkedungmulyo": [-7.5100, 112.1700],
+    "Wonosalam":         [-7.6500, 112.3900],
+}
+kec_list = list(kecamatan_jombang.values())
+lat_base, lon_base = -7.5466, 112.2384
+
 rng_d = np.random.default_rng(42)
 rng_c = np.random.default_rng(99)
 
-# Generate demand berdasarkan kecamatan terpilih
-demand_lats, demand_lons, demand_kec = [], [], []
-for kec in kec_terpilih:
-    center = kecamatan_jombang[kec]
-    for _ in range(demand_per_kec):
-        demand_lats.append(float(center[0]) + rng_d.normal(0, 0.020))
-        demand_lons.append(float(center[1]) + rng_d.normal(0, 0.020))
-        demand_kec.append(kec)
+demand_lats, demand_lons = [], []
+for _ in range(num_demand):
+    center = kec_list[rng_d.integers(0, len(kec_list))]
+    demand_lats.append(float(center[0]) + rng_d.normal(0, 0.025))
+    demand_lons.append(float(center[1]) + rng_d.normal(0, 0.025))
 
 demand_data = pd.DataFrame({
-    'Kecamatan': demand_kec,
-    'Lat':       demand_lats,
-    'Lon':       demand_lons,
-    'Demand':    rng_d.integers(10, 120, num_demand)
+    'Lat':    demand_lats,
+    'Lon':    demand_lons,
+    'Demand': rng_d.integers(10, 120, num_demand)
 })
 demand_data['Jumlah_Truk'] = np.ceil(demand_data['Demand'] / kapasitas_truk).astype(int)
 
-# Kandidat gudang dari kecamatan pertama sejumlah num_candidates
-kec_list_all = list(kecamatan_jombang.values())
 candidate_lats, candidate_lons = [], []
 for i in range(num_candidates):
-    center = kec_list_all[i % len(kec_list_all)]
+    center = kec_list[i % len(kec_list)]
     candidate_lats.append(float(center[0]) + rng_c.uniform(-0.02, 0.02))
     candidate_lons.append(float(center[1]) + rng_c.uniform(-0.02, 0.02))
 
@@ -371,7 +249,7 @@ biaya_buka = [biaya_buka_per_gudang] * num_candidates
 def hitung_jarak_km(p1, p2, km_per_deg):
     return math.sqrt(((p1[0]-p2[0])*km_per_deg)**2 + ((p1[1]-p2[1])*km_per_deg)**2)
 
-# ── PRE-CHECK ─────────────────────────────────────────────────────────────────
+# ── PRE-CHECK: apakah secara teoritis feasible? ───────────────────────────────
 total_demand_all    = int(demand_data['Demand'].sum())
 total_rit_all       = int(demand_data['Jumlah_Truk'].sum())
 max_kapasitas_total = kapasitas_gudang * gudang_harus_buka
@@ -380,29 +258,32 @@ max_rit_total       = jumlah_armada * gudang_harus_buka
 infeasible_reasons = []
 if total_demand_all > max_kapasitas_total:
     infeasible_reasons.append({
-        "icon": "📦", "judul": "Kapasitas Gudang Tidak Cukup",
+        "icon": "📦",
+        "judul": "Kapasitas Gudang Tidak Cukup",
         "detail": (
-            f"Total demand seluruh agen adalah <b>{total_demand_all:,} unit</b>, "
+            f"Total demand seluruh agen adalah **{total_demand_all:,} unit**, "
             f"sedangkan kapasitas maksimal {gudang_harus_buka} gudang hanya "
-            f"<b>{max_kapasitas_total:,} unit</b> ({gudang_harus_buka} × {kapasitas_gudang:,}). "
-            f"Selisih kekurangan: <b>{total_demand_all - max_kapasitas_total:,} unit</b>."
+            f"**{max_kapasitas_total:,} unit** ({gudang_harus_buka} × {kapasitas_gudang:,}). "
+            f"Selisih kekurangan: **{total_demand_all - max_kapasitas_total:,} unit**."
         ),
-        "saran": "Tambah kapasitas gudang, tambah jumlah gudang yang dibuka, atau kurangi kecamatan demand."
+        "saran": "Tambah kapasitas gudang, tambah jumlah gudang yang dibuka, atau kurangi titik demand."
     })
 if total_rit_all > max_rit_total:
     infeasible_reasons.append({
-        "icon": "🚛", "judul": "Armada Truk Tidak Cukup",
+        "icon": "🚛",
+        "judul": "Armada Truk Tidak Cukup",
         "detail": (
-            f"Total kebutuhan rit truk adalah <b>{total_rit_all} rit</b>, "
+            f"Total kebutuhan rit truk adalah **{total_rit_all} rit**, "
             f"sedangkan kapasitas armada maksimal {gudang_harus_buka} gudang hanya "
-            f"<b>{max_rit_total} rit</b> ({gudang_harus_buka} × {jumlah_armada}). "
-            f"Kekurangan: <b>{total_rit_all - max_rit_total} rit</b>."
+            f"**{max_rit_total} rit** ({gudang_harus_buka} × {jumlah_armada}). "
+            f"Kekurangan: **{total_rit_all - max_rit_total} rit**."
         ),
-        "saran": "Tambah jumlah armada per gudang, tambah gudang yang dibuka, atau kurangi kecamatan demand."
+        "saran": "Tambah jumlah armada per gudang, tambah gudang yang dibuka, atau kurangi titik demand."
     })
 
 # ── MODEL OPTIMASI ────────────────────────────────────────────────────────────
 model = LpProblem("Facility_Location_Truck_Fleet", LpMinimize)
+
 y = LpVariable.dicts("Buka_Gudang", range(num_candidates), cat='Binary')
 x = LpVariable.dicts("Alokasi", (range(num_candidates), range(num_demand)), cat='Binary')
 
@@ -420,18 +301,32 @@ transport_cost = lpSum(
 )
 setup_cost = lpSum(biaya_buka[i] * 1000 * y[i] for i in range(num_candidates))
 opex_cost  = lpSum(biaya_operasional * 1000 * y[i] for i in range(num_candidates))
+
 model += transport_cost + setup_cost + opex_cost
 
+# C1: setiap demand dilayani tepat 1 gudang
 for j in range(num_demand):
     model += lpSum(x[i][j] for i in range(num_candidates)) == 1
+
+# C2: demand hanya ke gudang yang dibuka
 for i in range(num_candidates):
     for j in range(num_demand):
         model += x[i][j] <= y[i]
+
+# C3: jumlah gudang yang dibuka = p
 model += lpSum(y[i] for i in range(num_candidates)) == gudang_harus_buka
+
+# C4: total rit per gudang <= kapasitas armada
 for i in range(num_candidates):
-    model += lpSum(demand_data.loc[j, 'Jumlah_Truk'] * x[i][j] for j in range(num_demand)) <= jumlah_armada * y[i]
+    model += lpSum(
+        demand_data.loc[j, 'Jumlah_Truk'] * x[i][j] for j in range(num_demand)
+    ) <= jumlah_armada * y[i]
+
+# C5: total volume per gudang <= kapasitas gudang (BARU)
 for i in range(num_candidates):
-    model += lpSum(demand_data.loc[j, 'Demand'] * x[i][j] for j in range(num_demand)) <= kapasitas_gudang * y[i]
+    model += lpSum(
+        demand_data.loc[j, 'Demand'] * x[i][j] for j in range(num_demand)
+    ) <= kapasitas_gudang * y[i]
 
 solver_result = model.solve(PULP_CBC_CMD(msg=False))
 solver_status = LpStatus[model.status]
@@ -441,17 +336,24 @@ if solver_status == "Optimal":
     st.success("✅ **Solusi OPTIMAL ditemukan.** Alokasi gudang dengan biaya minimum berhasil dihitung dan memenuhi semua constraint.")
 
 elif solver_status in ("Infeasible", "Undefined", "Not Solved"):
+
+    # Card merah besar
     st.markdown("""
-    <div style="background:linear-gradient(135deg,#7f1d1d,#991b1b);border-radius:16px;
-                padding:28px 32px;margin-bottom:24px;
-                box-shadow:0 8px 32px rgba(153,27,27,0.35);border:1px solid #ef4444;">
-        <div style="display:flex;align-items:center;gap:14px;margin-bottom:16px;">
+    <div style="
+        background: linear-gradient(135deg, #7f1d1d, #991b1b);
+        border-radius: 16px;
+        padding: 28px 32px;
+        margin-bottom: 24px;
+        box-shadow: 0 8px 32px rgba(153,27,27,0.35);
+        border: 1px solid #ef4444;
+    ">
+        <div style="display:flex; align-items:center; gap:14px; margin-bottom:16px;">
             <div style="font-size:2.2rem;">❌</div>
             <div>
-                <div style="color:white;font-family:'Nunito',sans-serif;font-weight:900;font-size:1.3rem;">
+                <div style="color:white; font-family:'Nunito',sans-serif; font-weight:900; font-size:1.3rem; letter-spacing:-0.3px;">
                     Solusi TIDAK LAYAK (Infeasible)
                 </div>
-                <div style="color:#fca5a5;font-size:0.82rem;margin-top:2px;">
+                <div style="color:#fca5a5; font-size:0.82rem; margin-top:2px;">
                     Solver tidak dapat menemukan kombinasi alokasi yang memenuhi semua batasan.
                 </div>
             </div>
@@ -459,45 +361,61 @@ elif solver_status in ("Infeasible", "Undefined", "Not Solved"):
     </div>
     """, unsafe_allow_html=True)
 
+    # Diagnosa per penyebab
     if infeasible_reasons:
         st.markdown("#### 🔍 Diagnosa Penyebab")
         for r in infeasible_reasons:
             st.markdown(f"""
-            <div style="background:white;border-left:5px solid #EE4D2D;border-radius:10px;
-                        padding:16px 20px;margin-bottom:12px;box-shadow:0 2px 8px rgba(0,0,0,0.07);">
-                <div style="font-family:'Nunito',sans-serif;font-weight:800;font-size:1rem;color:#991b1b;margin-bottom:6px;">
+            <div style="
+                background: white;
+                border-left: 5px solid #EE4D2D;
+                border-radius: 10px;
+                padding: 16px 20px;
+                margin-bottom: 12px;
+                box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+            ">
+                <div style="font-family:'Nunito',sans-serif; font-weight:800; font-size:1rem; color:#991b1b; margin-bottom:6px;">
                     {r['icon']} {r['judul']}
                 </div>
-                <div style="font-size:0.88rem;color:#374151;margin-bottom:8px;line-height:1.6;">
+                <div style="font-size:0.88rem; color:#374151; margin-bottom:8px; line-height:1.6;">
                     {r['detail']}
                 </div>
-                <div style="background:#FFF3F0;border-radius:6px;padding:8px 12px;font-size:0.82rem;color:#92400e;">
+                <div style="background:#FFF3F0; border-radius:6px; padding:8px 12px; font-size:0.82rem; color:#92400e;">
                     💡 <b>Saran:</b> {r['saran']}
                 </div>
             </div>
             """, unsafe_allow_html=True)
     else:
+        # Solver infeasible tapi pre-check tidak mendeteksi → constraint distribusi tidak seimbang
         st.markdown(f"""
-        <div style="background:white;border-left:5px solid #EE4D2D;border-radius:10px;
-                    padding:16px 20px;margin-bottom:12px;box-shadow:0 2px 8px rgba(0,0,0,0.07);">
-            <div style="font-family:'Nunito',sans-serif;font-weight:800;font-size:1rem;color:#991b1b;margin-bottom:6px;">
+        <div style="
+            background: white;
+            border-left: 5px solid #EE4D2D;
+            border-radius: 10px;
+            padding: 16px 20px;
+            margin-bottom: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+        ">
+            <div style="font-family:'Nunito',sans-serif; font-weight:800; font-size:1rem; color:#991b1b; margin-bottom:6px;">
                 ⚖️ Distribusi Demand Tidak Seimbang
             </div>
-            <div style="font-size:0.88rem;color:#374151;margin-bottom:8px;line-height:1.6;">
-                Solver tidak bisa mendistribusikan demand ke <b>{gudang_harus_buka} gudang</b>
-                tanpa melanggar constraint armada atau kapasitas pada salah satu kandidat lokasi.
+            <div style="font-size:0.88rem; color:#374151; margin-bottom:8px; line-height:1.6;">
+                Secara total kapasitas mungkin cukup, namun solver tidak bisa mendistribusikan
+                demand ke <b>{gudang_harus_buka} gudang</b> tanpa melanggar constraint armada atau kapasitas gudang
+                pada salah satu kandidat lokasi.
             </div>
-            <div style="background:#FFF3F0;border-radius:6px;padding:8px 12px;font-size:0.82rem;color:#92400e;">
-                💡 <b>Saran:</b> Tambah kandidat gudang, naikkan armada atau kapasitas, atau kurangi kecamatan demand.
+            <div style="background:#FFF3F0; border-radius:6px; padding:8px 12px; font-size:0.82rem; color:#92400e;">
+                💡 <b>Saran:</b> Tambah jumlah kandidat gudang, naikkan armada atau kapasitas gudang, atau kurangi titik demand.
             </div>
         </div>
         """, unsafe_allow_html=True)
 
+    # Tabel ringkasan angka
     st.markdown("#### 📊 Ringkasan Parameter vs Kebutuhan")
     diag_df = pd.DataFrame({
-        "Parameter":    ["Total Demand (unit)", "Total Kebutuhan Rit", "Kapasitas Gudang × p", "Kapasitas Armada × p"],
-        "Nilai Aktual": [f"{total_demand_all:,}", f"{total_rit_all}", f"{max_kapasitas_total:,}", f"{max_rit_total}"],
-        "Status":       [
+        "Parameter":       ["Total Demand (unit)", "Total Kebutuhan Rit", "Kapasitas Gudang × p (unit)", "Kapasitas Armada × p (rit)"],
+        "Nilai Aktual":    [f"{total_demand_all:,}", f"{total_rit_all}", f"{max_kapasitas_total:,}", f"{max_rit_total}"],
+        "Status":          [
             "✅ Cukup" if total_demand_all <= max_kapasitas_total else "❌ Kurang",
             "✅ Cukup" if total_rit_all <= max_rit_total else "❌ Kurang",
             f"{kapasitas_gudang:,} × {gudang_harus_buka}",
@@ -508,7 +426,7 @@ elif solver_status in ("Infeasible", "Undefined", "Not Solved"):
     st.stop()
 
 else:
-    st.warning(f"⚠️ Status solver: **{solver_status}**.")
+    st.warning(f"⚠️ Status solver: **{solver_status}**. Solusi mungkin tidak valid.")
     st.stop()
 
 # ── HITUNG HASIL ──────────────────────────────────────────────────────────────
@@ -516,8 +434,10 @@ gudang_terpilih = [i for i in range(num_candidates) if (value(y[i]) or 0) >= 0.5
 
 total_truck_trips = sum(
     demand_data.loc[j, 'Jumlah_Truk']
-    for i in gudang_terpilih for j in range(num_demand) if (value(x[i][j]) or 0) >= 0.5
+    for i in gudang_terpilih
+    for j in range(num_demand) if (value(x[i][j]) or 0) >= 0.5
 )
+
 total_transport_cost_rb = sum(
     (
         demand_data.loc[j, 'Jumlah_Truk'] *
@@ -528,18 +448,23 @@ total_transport_cost_rb = sum(
         ) * biaya_truk_per_km
         + demand_data.loc[j, 'Jumlah_Truk'] * fixed_cost_truk
     )
-    for i in gudang_terpilih for j in range(num_demand) if (value(x[i][j]) or 0) >= 0.5
+    for i in gudang_terpilih
+    for j in range(num_demand) if (value(x[i][j]) or 0) >= 0.5
 )
 total_transport_cost_jt = total_transport_cost_rb / 1000
 total_setup_cost_jt     = sum(biaya_buka[i] for i in gudang_terpilih)
 total_opex_cost_jt      = biaya_operasional * len(gudang_terpilih)
 total_cost_jt           = total_transport_cost_jt + total_setup_cost_jt + total_opex_cost_jt
 
-utilisasi_armada    = {}
+utilisasi_armada = {}
+for i in gudang_terpilih:
+    rit = sum(demand_data.loc[j, 'Jumlah_Truk'] for j in range(num_demand) if (value(x[i][j]) or 0) >= 0.5)
+    utilisasi_armada[i] = rit
+
 utilisasi_kapasitas = {}
 for i in gudang_terpilih:
-    utilisasi_armada[i]    = sum(demand_data.loc[j, 'Jumlah_Truk'] for j in range(num_demand) if (value(x[i][j]) or 0) >= 0.5)
-    utilisasi_kapasitas[i] = sum(demand_data.loc[j, 'Demand']      for j in range(num_demand) if (value(x[i][j]) or 0) >= 0.5)
+    vol = sum(demand_data.loc[j, 'Demand'] for j in range(num_demand) if (value(x[i][j]) or 0) >= 0.5)
+    utilisasi_kapasitas[i] = vol
 
 # ── METRICS ───────────────────────────────────────────────────────────────────
 st.markdown("### 📊 Ringkasan Hasil Optimasi")
@@ -551,10 +476,10 @@ with c4: st.metric("🛣️ Biaya Transport",  f"Rp {total_transport_cost_jt:,.1
 with c5: st.metric("💰 Total Biaya",      f"Rp {total_cost_jt:,.1f} jt")
 
 for i in gudang_terpilih:
-    pct_arm = utilisasi_armada[i] / jumlah_armada * 100
-    pct_kap = utilisasi_kapasitas[i] / kapasitas_gudang * 100
-    if pct_arm >= 90:
-        st.warning(f"⚠️ **{candidate_data.loc[i, 'Gudang']}** — armada hampir penuh: **{utilisasi_armada[i]}/{jumlah_armada} rit** ({pct_arm:.0f}%)")
+    pct_armada = utilisasi_armada[i] / jumlah_armada * 100
+    pct_kap    = utilisasi_kapasitas[i] / kapasitas_gudang * 100
+    if pct_armada >= 90:
+        st.warning(f"⚠️ **{candidate_data.loc[i, 'Gudang']}** — armada hampir penuh: **{utilisasi_armada[i]}/{jumlah_armada} rit** ({pct_armada:.0f}%)")
     if pct_kap >= 90:
         st.warning(f"⚠️ **{candidate_data.loc[i, 'Gudang']}** — kapasitas gudang hampir penuh: **{utilisasi_kapasitas[i]:,}/{kapasitas_gudang:,} unit** ({pct_kap:.0f}%)")
 
@@ -570,35 +495,17 @@ tab1, tab2, tab3, tab4 = st.tabs([
 
 # ── TAB 1: PETA ───────────────────────────────────────────────────────────────
 with tab1:
-    st.markdown("##### Sebaran titik demand per kecamatan dan rute distribusi truk dari gudang terpilih")
-
-    # Warna per kecamatan
-    warna_kec = [
-        "#EE4D2D","#3b82f6","#22c55e","#f59e0b","#8b5cf6",
-        "#ec4899","#06b6d4","#84cc16","#f97316","#6366f1",
-        "#14b8a6","#ef4444","#a855f7","#0ea5e9","#d97706",
-        "#10b981","#e11d48","#7c3aed","#0284c7","#65a30d","#dc2626"
-    ]
-    kec_warna_map = {kec: warna_kec[i % len(warna_kec)] for i, kec in enumerate(kec_terpilih)}
-
+    st.markdown("##### Sebaran titik demand dan rute distribusi truk dari gudang terpilih")
     m = folium.Map(location=[lat_base, lon_base], zoom_start=11, tiles="CartoDB positron")
 
-    # Titik demand berwarna per kecamatan
     for _, row in demand_data.iterrows():
-        warna = kec_warna_map.get(row['Kecamatan'], '#EE4D2D')
         folium.CircleMarker(
             location=[row['Lat'], row['Lon']],
             radius=max(3, float(row['Demand']) / 15),
-            color=warna, fill=True, fill_color=warna, fill_opacity=0.6,
-            popup=folium.Popup(
-                f"<b>Kecamatan:</b> {row['Kecamatan']}<br>"
-                f"<b>Demand:</b> {row['Demand']} unit<br>"
-                f"<b>Kebutuhan:</b> {row['Jumlah_Truk']} Rit",
-                max_width=180
-            )
+            color='#EE4D2D', fill=True, fill_color='#EE4D2D', fill_opacity=0.45,
+            popup=folium.Popup(f"<b>Demand:</b> {row['Demand']} unit<br><b>Kebutuhan:</b> {row['Jumlah_Truk']} Rit", max_width=160)
         ).add_to(m)
 
-    # Kandidat gudang
     for i, row in candidate_data.iterrows():
         terpilih   = i in gudang_terpilih
         status_txt = "✅ TERPILIH" if terpilih else "❌ Tidak Dipilih"
@@ -619,23 +526,10 @@ with tab1:
                     folium.PolyLine(
                         locations=[[row['Lat'], row['Lon']], [d_row['Lat'], d_row['Lon']]],
                         color='#EE4D2D', weight=min(5, int(d_row['Jumlah_Truk'])),
-                        opacity=0.4, tooltip=f"{d_row['Jumlah_Truk']} rit truk"
+                        opacity=0.45, tooltip=f"{d_row['Jumlah_Truk']} rit truk"
                     ).add_to(m)
 
     st_folium(m, width="100%", height=520, returned_objects=[])
-
-    # Legend warna kecamatan
-    legend_html = '<div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:10px;">'
-    for kec in kec_terpilih:
-        w = kec_warna_map[kec]
-        legend_html += (
-            f'<div style="display:flex;align-items:center;gap:5px;'
-            f'background:white;border:1px solid #EDEDED;border-radius:6px;padding:4px 10px;">'
-            f'<div style="width:12px;height:12px;border-radius:50%;background:{w};flex-shrink:0;"></div>'
-            f'<span style="font-size:0.78rem;color:#333;">{kec}</span></div>'
-        )
-    legend_html += '</div>'
-    st.markdown(legend_html, unsafe_allow_html=True)
 
 # ── TAB 2: ANALISIS GUDANG ────────────────────────────────────────────────────
 with tab2:
@@ -651,8 +545,8 @@ with tab2:
                 (demand_data.loc[j, 'Lat'], demand_data.loc[j, 'Lon']), km_per_deg
             ) for j in served]) if served else 0
         )
-        armada_beroperasi = min(total_rit, jumlah_armada)
-        armada_idle       = jumlah_armada - armada_beroperasi
+        armada_beroperasi    = min(total_rit, jumlah_armada)
+        armada_idle          = jumlah_armada - armada_beroperasi
         rows.append({
             "Gudang":              candidate_data.loc[i, 'Gudang'],
             "Agen Dilayani":       len(served),
@@ -669,30 +563,41 @@ with tab2:
             "Opex (Rp jt)":        f"{biaya_operasional:.0f}",
         })
 
-    st.dataframe(pd.DataFrame(rows), use_container_width=True, hide_index=True)
+    df_gudang = pd.DataFrame(rows)
+    st.dataframe(df_gudang, use_container_width=True, hide_index=True)
 
+    # — Mini summary armada total —
     total_beroperasi = sum(min(utilisasi_armada[i], jumlah_armada) for i in gudang_terpilih)
     total_idle       = jumlah_armada * len(gudang_terpilih) - total_beroperasi
     total_armada_all = jumlah_armada * len(gudang_terpilih)
 
     st.markdown(f"""
-    <div style="display:flex;gap:12px;margin-top:16px;">
-        <div style="flex:1;background:#F0FFF4;border:1.5px solid #86efac;border-radius:10px;padding:14px 18px;text-align:center;">
-            <div style="font-size:0.72rem;font-weight:700;color:#166534;text-transform:uppercase;letter-spacing:0.5px;">🟢 Total Armada Beroperasi</div>
-            <div style="font-family:'Nunito',sans-serif;font-weight:900;font-size:1.6rem;color:#16a34a;margin:4px 0;">{total_beroperasi}</div>
-            <div style="font-size:0.78rem;color:#166534;">dari {total_armada_all} armada total</div>
+    <div style="display:flex; gap:12px; margin-top:16px;">
+        <div style="flex:1; background:#F0FFF4; border:1.5px solid #86efac; border-radius:10px;
+                    padding:14px 18px; text-align:center;">
+            <div style="font-size:0.72rem; font-weight:700; color:#166534;
+                        text-transform:uppercase; letter-spacing:0.5px;">🟢 Total Armada Beroperasi</div>
+            <div style="font-family:'Nunito',sans-serif; font-weight:900;
+                        font-size:1.6rem; color:#16a34a; margin:4px 0;">{total_beroperasi}</div>
+            <div style="font-size:0.78rem; color:#166534;">dari {total_armada_all} armada total</div>
         </div>
-        <div style="flex:1;background:#F5F5F5;border:1.5px solid #d1d5db;border-radius:10px;padding:14px 18px;text-align:center;">
-            <div style="font-size:0.72rem;font-weight:700;color:#374151;text-transform:uppercase;letter-spacing:0.5px;">⚪ Total Armada Idle</div>
-            <div style="font-family:'Nunito',sans-serif;font-weight:900;font-size:1.6rem;color:#6b7280;margin:4px 0;">{total_idle}</div>
-            <div style="font-size:0.78rem;color:#6b7280;">tidak digunakan</div>
+        <div style="flex:1; background:#F5F5F5; border:1.5px solid #d1d5db; border-radius:10px;
+                    padding:14px 18px; text-align:center;">
+            <div style="font-size:0.72rem; font-weight:700; color:#374151;
+                        text-transform:uppercase; letter-spacing:0.5px;">⚪ Total Armada Idle</div>
+            <div style="font-family:'Nunito',sans-serif; font-weight:900;
+                        font-size:1.6rem; color:#6b7280; margin:4px 0;">{total_idle}</div>
+            <div style="font-size:0.78rem; color:#6b7280;">tidak digunakan</div>
         </div>
-        <div style="flex:1;background:#FFF3F0;border:1.5px solid #FFDDD6;border-radius:10px;padding:14px 18px;text-align:center;">
-            <div style="font-size:0.72rem;font-weight:700;color:#993C1D;text-transform:uppercase;letter-spacing:0.5px;">📊 Utilisasi Armada Total</div>
-            <div style="font-family:'Nunito',sans-serif;font-weight:900;font-size:1.6rem;color:#EE4D2D;margin:4px 0;">
+        <div style="flex:1; background:#FFF3F0; border:1.5px solid #FFDDD6; border-radius:10px;
+                    padding:14px 18px; text-align:center;">
+            <div style="font-size:0.72rem; font-weight:700; color:#993C1D;
+                        text-transform:uppercase; letter-spacing:0.5px;">📊 Utilisasi Armada Total</div>
+            <div style="font-family:'Nunito',sans-serif; font-weight:900;
+                        font-size:1.6rem; color:#EE4D2D; margin:4px 0;">
                 {100*total_beroperasi/total_armada_all:.1f}%
             </div>
-            <div style="font-size:0.78rem;color:#993C1D;">{total_beroperasi}/{total_armada_all} rit terpakai</div>
+            <div style="font-size:0.78rem; color:#993C1D;">{total_beroperasi}/{total_armada_all} rit terpakai</div>
         </div>
     </div>
     """, unsafe_allow_html=True)
@@ -705,7 +610,7 @@ with tab3:
         cost_df = pd.DataFrame({
             "Komponen Biaya":  ["🚛 Transportasi (Truk)", "🏗️ Setup Gudang", "🏢 Operasional", "💰 TOTAL"],
             "Nilai (Rp juta)": [f"{total_transport_cost_jt:,.2f}", f"{total_setup_cost_jt:,.2f}", f"{total_opex_cost_jt:,.2f}", f"{total_cost_jt:,.2f}"],
-            "Proporsi (%)": [
+            "Proporsi (%)":    [
                 f"{100*total_transport_cost_jt/total_cost_jt:.1f}%" if total_cost_jt else "-",
                 f"{100*total_setup_cost_jt/total_cost_jt:.1f}%"    if total_cost_jt else "-",
                 f"{100*total_opex_cost_jt/total_cost_jt:.1f}%"     if total_cost_jt else "-",
@@ -729,14 +634,18 @@ with tab4:
     st.markdown("##### Formulasi model Mixed-Integer Linear Programming (MILP)")
 
     st.markdown("**Variabel Keputusan**")
-    st.dataframe(pd.DataFrame({
+    var_df = pd.DataFrame({
         "Variabel": ["yᵢ", "xᵢⱼ"],
-        "Definisi": ["= 1 jika kandidat gudang i dibuka, = 0 jika tidak",
-                     "= 1 jika titik demand j dilayani oleh gudang i, = 0 jika tidak"],
+        "Definisi": [
+            "= 1 jika kandidat gudang i dibuka, = 0 jika tidak",
+            "= 1 jika titik demand j dilayani oleh gudang i, = 0 jika tidak",
+        ],
         "Tipe": ["Binary", "Binary"],
-    }), use_container_width=True, hide_index=True)
+    })
+    st.dataframe(var_df, use_container_width=True, hide_index=True)
 
     st.divider()
+
     st.markdown("**Fungsi Objektif — Minimasi Total Biaya**")
     st.latex(r"""
         \min \quad Z = \underbrace{\sum_{i}\sum_{j}
@@ -746,42 +655,57 @@ with tab4:
     """)
 
     st.divider()
+
     st.markdown("**Constraint (Batasan Model)**")
+
     st.markdown("**C1 — Pelayanan Penuh:** setiap titik demand dilayani tepat 1 gudang")
     st.latex(r"\sum_{i} x_{ij} = 1 \qquad \forall \, j")
+
     st.markdown("**C2 — Konsistensi Gudang:** demand hanya bisa dialokasikan ke gudang yang dibuka")
     st.latex(r"x_{ij} \leq y_i \qquad \forall \, i, \, j")
+
     st.markdown("**C3 — Jumlah Gudang:** jumlah gudang yang dibuka harus tepat p")
     st.latex(r"\sum_{i} y_i = p")
+
     st.markdown("**C4 — Kapasitas Armada:** total rit truk per gudang tidak boleh melebihi kapasitas armada")
     st.latex(r"\sum_{j} n_j \cdot x_{ij} \leq A \cdot y_i \qquad \forall \, i")
+
     st.markdown("**C5 — Kapasitas Gudang:** total volume barang per gudang tidak boleh melebihi kapasitas gudang")
     st.latex(r"\sum_{j} \text{demand}_j \cdot x_{ij} \leq W \cdot y_i \qquad \forall \, i")
+
     st.markdown("**Domain Variabel**")
     st.latex(r"y_i \in \{0,1\} \quad \forall\,i \qquad x_{ij} \in \{0,1\} \quad \forall\,i,j")
 
     st.divider()
+
     st.markdown("**Notasi Parameter**")
-    st.dataframe(pd.DataFrame({
-        "Simbol": ["i", "j", "nⱼ", "dᵢⱼ", "c_km", "c_fix", "F", "O", "p", "A", "W"],
+    notasi_df = pd.DataFrame({
+        "Simbol":     ["i", "j", "nⱼ", "dᵢⱼ", "c_km", "c_fix", "F", "O", "p", "A", "W"],
         "Keterangan": [
             "Indeks kandidat gudang",
             "Indeks titik demand",
             "Jumlah rit truk untuk demand j = ⌈demand_j / kapasitas_truk⌉",
             "Jarak Euclidean (km) dari gudang i ke titik demand j",
             "Biaya operasional truk per km (Rp ribu)",
-            "Biaya tetap per rit truk (Rp ribu)",
-            "Biaya pembukaan gudang (Rp)",
+            "Biaya tetap per rit truk — uang jalan, tol, dll (Rp ribu)",
+            "Biaya pembukaan gudang, berlaku sama untuk semua kandidat (Rp)",
             "Biaya operasional bulanan per gudang (Rp)",
-            "Jumlah gudang yang harus dibuka",
-            "Jumlah armada truk tersedia per gudang",
+            "Jumlah gudang yang harus dibuka (input user)",
+            "Jumlah armada truk tersedia per gudang (input user)",
             "Kapasitas maksimal volume barang per gudang (unit)",
         ],
         "Nilai Saat Ini": [
-            f"0 s/d {num_candidates-1}", f"0 s/d {num_demand-1}",
-            "Dihitung otomatis", "Dihitung otomatis",
-            f"Rp {biaya_truk_per_km:.1f} rb/km", f"Rp {fixed_cost_truk:.1f} rb/rit",
-            f"Rp {biaya_buka_per_gudang:.0f} jt", f"Rp {biaya_operasional:.0f} jt/bulan",
-            str(gudang_harus_buka), str(jumlah_armada), f"{kapasitas_gudang:,} unit",
+            f"0 s/d {num_candidates-1}",
+            f"0 s/d {num_demand-1}",
+            "Dihitung otomatis",
+            "Dihitung otomatis",
+            f"Rp {biaya_truk_per_km:.1f} rb/km",
+            f"Rp {fixed_cost_truk:.1f} rb/rit",
+            f"Rp {biaya_buka_per_gudang:.0f} jt",
+            f"Rp {biaya_operasional:.0f} jt/bulan",
+            str(gudang_harus_buka),
+            str(jumlah_armada),
+            f"{kapasitas_gudang:,} unit",
         ],
-    }), use_container_width=True, hide_index=True)
+    })
+    st.dataframe(notasi_df, use_container_width=True, hide_index=True)
