@@ -128,6 +128,33 @@ st.markdown("""
 </div>
 """, unsafe_allow_html=True)
 
+# ── DEFINISI KOORDINAT KECAMATAN LENGKAP (21 KECAMATAN) ───────────────────────
+kecamatan_jombang = {
+    "Bandarkedungmulyo": [-7.5750, 112.1460],
+    "Perak":             [-7.5878, 112.1764],
+    "Gudo":              [-7.6433, 112.1856],
+    "Diwek":             [-7.5936, 112.2185],
+    "Ngoro":             [-7.6841, 112.2592],
+    "Mojowarno":         [-7.6369, 112.2908],
+    "Bareng":            [-7.6975, 112.3136],
+    "Wonosalam":         [-7.7289, 112.3831],
+    "Mojoagung":         [-7.5684, 112.3364],
+    "Sumobito":          [-7.5200, 112.3100],
+    "Jogoroto":          [-7.5833, 112.2750],
+    "Peterongan":        [-7.5461, 112.2714],
+    "Jombang Kota":      [-7.5568, 112.2332],
+    "Megaluh":           [-7.4833, 112.1917],
+    "Tembelang":         [-7.4917, 112.2333],
+    "Kesamben":          [-7.4439, 112.3551],
+    "Kudu":              [-7.4083, 112.3083],
+    "Ngusikan":          [-7.3833, 112.3333],
+    "Ploso":             [-7.4566, 112.2152],
+    "Kabuh":             [-7.3833, 112.2167],
+    "Plandaan":          [-7.4083, 112.1333],
+}
+kec_list = list(kecamatan_jombang.values())
+lat_base, lon_base = -7.5466, 112.2384
+
 # ── SIDEBAR ───────────────────────────────────────────────────────────────────
 with st.sidebar:
     st.markdown("""
@@ -139,16 +166,32 @@ with st.sidebar:
     """, unsafe_allow_html=True)
 
     st.markdown('<div class="sidebar-section">📍 Titik Demand & Kandidat</div>', unsafe_allow_html=True)
+    
+    # Menampilkan input kecamatan dalam 2 kolom supaya tidak memanjang di sidebar
+    with st.expander("Atur Titik Demand per Kecamatan", expanded=False):
+        demand_per_kec = {}
+        cols = st.columns(2)
+        kec_names = list(kecamatan_jombang.keys())
+        half = len(kec_names) // 2 + 1
+        
+        for i, kec_name in enumerate(kec_names):
+            # Diisi default 2 titik per kecamatan, bisa disesuaikan manual
+            with cols[0 if i < half else 1]:
+                demand_per_kec[kec_name] = st.number_input(kec_name, min_value=0, value=2, step=1, key=f"d_{kec_name}")
+            
+    num_demand = sum(demand_per_kec.values())
+    st.info(f"**Total Titik Demand: {num_demand}**", icon="ℹ️")
+    
+    if num_demand == 0:
+        st.error("Total titik demand tidak boleh 0. Silakan tambahkan minimal 1 titik.")
+        st.stop()
+
     col_s1, col_s2 = st.columns(2)
     with col_s1:
-        num_demand = st.number_input("Titik Demand", min_value=1, value=40, step=5,
-                                     help="Jumlah agen/user sebagai titik demand")
-    with col_s2:
         num_candidates = st.number_input("Kandidat Gudang", min_value=1, value=5, step=1,
                                          help="Jumlah kandidat lokasi gudang")
-    gudang_harus_buka = st.number_input(
-        "Gudang Harus Dibuka", min_value=1, max_value=num_candidates, value=2, step=1
-    )
+    with col_s2:
+        gudang_harus_buka = st.number_input("Gudang Dibuka", min_value=1, max_value=num_candidates, value=2, step=1)
 
     st.divider()
 
@@ -156,7 +199,7 @@ with st.sidebar:
     col_t1, col_t2 = st.columns(2)
     with col_t1:
         kapasitas_truk = st.number_input("Kapasitas / Truk", min_value=10, value=50, step=5,
-                                          help="Maksimal unit barang per truk")
+                                         help="Maksimal unit barang per truk")
     with col_t2:
         jumlah_armada = st.number_input("Armada / Gudang", min_value=1, value=5, step=1,
                                          help="Maksimal truk per gudang")
@@ -186,8 +229,7 @@ with st.sidebar:
     kapasitas_gudang = st.number_input(
         "Kapasitas Gudang (Unit Barang)",
         min_value=100, value=2000, step=100,
-        help="Maksimal total unit barang yang bisa ditampung satu gudang. "
-             "Jika total demand yang dialokasikan ke satu gudang melebihi ini, solusi dinyatakan TIDAK LAYAK."
+        help="Maksimal total unit barang yang bisa ditampung satu gudang. Jika total demand yang dialokasikan ke satu gudang melebihi ini, solusi dinyatakan TIDAK LAYAK."
     )
 
     st.divider()
@@ -200,42 +242,34 @@ with st.sidebar:
     )
 
 # ── DATA GENERATOR ────────────────────────────────────────────────────────────
-kecamatan_jombang = {
-    "Jombang Kota":      [-7.5568, 112.2332],
-    "Peterongan":        [-7.5461, 112.2714],
-    "Mojoagung":         [-7.5684, 112.3364],
-    "Ploso":             [-7.4566, 112.2152],
-    "Ngoro":             [-7.6841, 112.2592],
-    "Diwek":             [-7.5936, 112.2185],
-    "Sumobito":          [-7.5200, 112.3100],
-    "Kesamben":          [-7.6200, 112.3600],
-    "Bandarkedungmulyo": [-7.5100, 112.1700],
-    "Wonosalam":         [-7.6500, 112.3900],
-}
-kec_list = list(kecamatan_jombang.values())
-lat_base, lon_base = -7.5466, 112.2384
-
 rng_d = np.random.default_rng(42)
 rng_c = np.random.default_rng(99)
 
-demand_lats, demand_lons = [], []
-for _ in range(num_demand):
-    center = kec_list[rng_d.integers(0, len(kec_list))]
-    demand_lats.append(float(center[0]) + rng_d.normal(0, 0.025))
-    demand_lons.append(float(center[1]) + rng_d.normal(0, 0.025))
+demand_lats, demand_lons, demand_kecamatan = [], [], []
+
+for kec_name, qty in demand_per_kec.items():
+    center = kecamatan_jombang[kec_name]
+    for _ in range(qty):
+        # MENGGUNAKAN UNIFORM DENGAN RENTANG KETAT (+/- ~1.5 km)
+        # Menjamin agar titik tidak keluar atau melenceng jauh hingga masuk kecamatan lain
+        demand_lats.append(float(center[0]) + rng_d.uniform(-0.015, 0.015))
+        demand_lons.append(float(center[1]) + rng_d.uniform(-0.015, 0.015))
+        demand_kecamatan.append(kec_name)
 
 demand_data = pd.DataFrame({
-    'Lat':    demand_lats,
-    'Lon':    demand_lons,
-    'Demand': rng_d.integers(10, 120, num_demand)
+    'Kecamatan': demand_kecamatan,
+    'Lat':       demand_lats,
+    'Lon':       demand_lons,
+    'Demand':    rng_d.integers(10, 120, num_demand) if num_demand > 0 else []
 })
 demand_data['Jumlah_Truk'] = np.ceil(demand_data['Demand'] / kapasitas_truk).astype(int)
 
 candidate_lats, candidate_lons = [], []
 for i in range(num_candidates):
-    center = kec_list[i % len(kec_list)]
-    candidate_lats.append(float(center[0]) + rng_c.uniform(-0.02, 0.02))
-    candidate_lons.append(float(center[1]) + rng_c.uniform(-0.02, 0.02))
+    # Menyebar titik kandidat gudang agar juga berada dalam radius batas yang wajar
+    center = kec_list[rng_c.integers(0, len(kec_list))]
+    candidate_lats.append(float(center[0]) + rng_c.uniform(-0.015, 0.015))
+    candidate_lons.append(float(center[1]) + rng_c.uniform(-0.015, 0.015))
 
 candidate_data = pd.DataFrame({
     'Gudang': [f"Kandidat Gudang {i+1}" for i in range(num_candidates)],
@@ -322,7 +356,7 @@ for i in range(num_candidates):
         demand_data.loc[j, 'Jumlah_Truk'] * x[i][j] for j in range(num_demand)
     ) <= jumlah_armada * y[i]
 
-# C5: total volume per gudang <= kapasitas gudang (BARU)
+# C5: total volume per gudang <= kapasitas gudang
 for i in range(num_candidates):
     model += lpSum(
         demand_data.loc[j, 'Demand'] * x[i][j] for j in range(num_demand)
@@ -337,7 +371,6 @@ if solver_status == "Optimal":
 
 elif solver_status in ("Infeasible", "Undefined", "Not Solved"):
 
-    # Card merah besar
     st.markdown("""
     <div style="
         background: linear-gradient(135deg, #7f1d1d, #991b1b);
@@ -361,7 +394,6 @@ elif solver_status in ("Infeasible", "Undefined", "Not Solved"):
     </div>
     """, unsafe_allow_html=True)
 
-    # Diagnosa per penyebab
     if infeasible_reasons:
         st.markdown("#### 🔍 Diagnosa Penyebab")
         for r in infeasible_reasons:
@@ -386,7 +418,6 @@ elif solver_status in ("Infeasible", "Undefined", "Not Solved"):
             </div>
             """, unsafe_allow_html=True)
     else:
-        # Solver infeasible tapi pre-check tidak mendeteksi → constraint distribusi tidak seimbang
         st.markdown(f"""
         <div style="
             background: white;
@@ -410,7 +441,6 @@ elif solver_status in ("Infeasible", "Undefined", "Not Solved"):
         </div>
         """, unsafe_allow_html=True)
 
-    # Tabel ringkasan angka
     st.markdown("#### 📊 Ringkasan Parameter vs Kebutuhan")
     diag_df = pd.DataFrame({
         "Parameter":       ["Total Demand (unit)", "Total Kebutuhan Rit", "Kapasitas Gudang × p (unit)", "Kapasitas Armada × p (rit)"],
@@ -503,7 +533,7 @@ with tab1:
             location=[row['Lat'], row['Lon']],
             radius=max(3, float(row['Demand']) / 15),
             color='#EE4D2D', fill=True, fill_color='#EE4D2D', fill_opacity=0.45,
-            popup=folium.Popup(f"<b>Demand:</b> {row['Demand']} unit<br><b>Kebutuhan:</b> {row['Jumlah_Truk']} Rit", max_width=160)
+            popup=folium.Popup(f"<b>Kecamatan:</b> {row['Kecamatan']}<br><b>Demand:</b> {row['Demand']} unit<br><b>Kebutuhan:</b> {row['Jumlah_Truk']} Rit", max_width=180)
         ).add_to(m)
 
     for i, row in candidate_data.iterrows():
@@ -566,7 +596,6 @@ with tab2:
     df_gudang = pd.DataFrame(rows)
     st.dataframe(df_gudang, use_container_width=True, hide_index=True)
 
-    # — Mini summary armada total —
     total_beroperasi = sum(min(utilisasi_armada[i], jumlah_armada) for i in gudang_terpilih)
     total_idle       = jumlah_armada * len(gudang_terpilih) - total_beroperasi
     total_armada_all = jumlah_armada * len(gudang_terpilih)
