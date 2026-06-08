@@ -545,6 +545,8 @@ with tab2:
                 (demand_data.loc[j, 'Lat'], demand_data.loc[j, 'Lon']), km_per_deg
             ) for j in served]) if served else 0
         )
+        armada_beroperasi    = min(total_rit, jumlah_armada)
+        armada_idle          = jumlah_armada - armada_beroperasi
         rows.append({
             "Gudang":              candidate_data.loc[i, 'Gudang'],
             "Agen Dilayani":       len(served),
@@ -553,12 +555,52 @@ with tab2:
             "Utilisasi Kap. (%)":  f"{100*total_demand_served/kapasitas_gudang:.1f}%",
             "Total Rit":           total_rit,
             "Kap. Armada":         jumlah_armada,
+            "🟢 Armada Beroperasi": armada_beroperasi,
+            "⚪ Armada Idle":       armada_idle,
             "Utilisasi Arm. (%)":  f"{100*total_rit/jumlah_armada:.1f}%",
             "Avg. Jarak (km)":     f"{avg_dist:.2f}",
             "Setup (Rp jt)":       f"{biaya_buka[i]:.0f}",
             "Opex (Rp jt)":        f"{biaya_operasional:.0f}",
         })
-    st.dataframe(pd.DataFrame(rows), use_container_width=True, hide_index=True)
+
+    df_gudang = pd.DataFrame(rows)
+    st.dataframe(df_gudang, use_container_width=True, hide_index=True)
+
+    # — Mini summary armada total —
+    total_beroperasi = sum(min(utilisasi_armada[i], jumlah_armada) for i in gudang_terpilih)
+    total_idle       = jumlah_armada * len(gudang_terpilih) - total_beroperasi
+    total_armada_all = jumlah_armada * len(gudang_terpilih)
+
+    st.markdown(f"""
+    <div style="display:flex; gap:12px; margin-top:16px;">
+        <div style="flex:1; background:#F0FFF4; border:1.5px solid #86efac; border-radius:10px;
+                    padding:14px 18px; text-align:center;">
+            <div style="font-size:0.72rem; font-weight:700; color:#166534;
+                        text-transform:uppercase; letter-spacing:0.5px;">🟢 Total Armada Beroperasi</div>
+            <div style="font-family:'Nunito',sans-serif; font-weight:900;
+                        font-size:1.6rem; color:#16a34a; margin:4px 0;">{total_beroperasi}</div>
+            <div style="font-size:0.78rem; color:#166534;">dari {total_armada_all} armada total</div>
+        </div>
+        <div style="flex:1; background:#F5F5F5; border:1.5px solid #d1d5db; border-radius:10px;
+                    padding:14px 18px; text-align:center;">
+            <div style="font-size:0.72rem; font-weight:700; color:#374151;
+                        text-transform:uppercase; letter-spacing:0.5px;">⚪ Total Armada Idle</div>
+            <div style="font-family:'Nunito',sans-serif; font-weight:900;
+                        font-size:1.6rem; color:#6b7280; margin:4px 0;">{total_idle}</div>
+            <div style="font-size:0.78rem; color:#6b7280;">tidak digunakan</div>
+        </div>
+        <div style="flex:1; background:#FFF3F0; border:1.5px solid #FFDDD6; border-radius:10px;
+                    padding:14px 18px; text-align:center;">
+            <div style="font-size:0.72rem; font-weight:700; color:#993C1D;
+                        text-transform:uppercase; letter-spacing:0.5px;">📊 Utilisasi Armada Total</div>
+            <div style="font-family:'Nunito',sans-serif; font-weight:900;
+                        font-size:1.6rem; color:#EE4D2D; margin:4px 0;">
+                {100*total_beroperasi/total_armada_all:.1f}%
+            </div>
+            <div style="font-size:0.78rem; color:#993C1D;">{total_beroperasi}/{total_armada_all} rit terpakai</div>
+        </div>
+    </div>
+    """, unsafe_allow_html=True)
 
 # ── TAB 3: BREAKDOWN BIAYA ────────────────────────────────────────────────────
 with tab3:
